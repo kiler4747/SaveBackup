@@ -46,15 +46,21 @@
 				<Grid Name="grid1">
 					<DataGrid AutoGenerateColumns="False" Height="227" HorizontalAlignment="Stretch" Name="dataGrid1" VerticalAlignment="Stretch" Width="Auto" Margin="0,0,0,31">
 						<DataGrid.Columns>
-							<DataGridTextColumn Header="Id" Binding="{Binding Path=ID}" IsReadOnly="True"/>
-							<DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" IsReadOnly="True"/>
-							<DataGridTextColumn Header="Path" Binding="{Binding Path=Path}" IsReadOnly="True"/>
+							<DataGridTextColumn Header="Id" Binding="{Binding Path=ID}" IsReadOnly="True" />
+							<DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" IsReadOnly="True" />
+							<DataGridTextColumn Header="Path" Binding="{Binding Path=Path}" IsReadOnly="True" />
 						</DataGrid.Columns>
 					</DataGrid>
 					<DockPanel Height="27" HorizontalAlignment="Stretch" Margin="0,231,0,0" Name="dockPanel1" VerticalAlignment="Stretch" Width="493">
-						<Button DockPanel.Dock="Left"  Content="Analize" Height="23" Name="button2" Width="75" Click="button2_Click" />
+						<Button DockPanel.Dock="Left" Content="Analize" Height="23" Name="button2" Width="75" Click="button2_Click" />
 						<Button DockPanel.Dock="Left" Content="Restore" Height="23" Name="button3" Width="75" Click="button3_Click" />
 					</DockPanel>
+				</Grid>
+			</TabItem>
+			<TabItem Header="Loging">
+				<Grid>
+					<ListBox Height="177" Name="listBox1" Width="278" Margin="6,0,208,81" />
+					<Button Content="Button" Height="23" HorizontalAlignment="Left" Margin="78,228,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="button1_Click_1" />
 				</Grid>
 			</TabItem>
 		</TabControl>

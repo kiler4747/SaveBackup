@@ -10,9 +10,11 @@
 	using System.Data.SqlClient;
 	using System.IO;
 	using System.Linq;
+	using System.Security.AccessControl;
 	using System.Windows;
 	using System.Windows.Data;
 	using System.Windows.Threading;
+	using MyLibrary.FileSystemExt;
 	using SaveBackup.SaveDataSetTableAdapters;
 
 	#endregion
@@ -110,7 +112,7 @@
 			_saveDataSetSaveTableAdapter.Fill(_saveDataSet.Save);
 			CollectionViewSource saveViewSource = ((CollectionViewSource)(FindResource("saveViewSource")));
 			saveViewSource.View.MoveCurrentToFirst();
-#if DEBUG
+#if dDEBUG
 			_saveDataSetSaveTableAdapter.Connection.Close();
 			_saveDataSet.Dispose();
 			_saveDataSetSaveTableAdapter.Dispose();
@@ -268,6 +270,22 @@
 #if Paralel
 			_backgroundWorker.CancelAsync();
 #endif
+		}
+
+		private void button1_Click_1(object sender, RoutedEventArgs e)
+		{
+			string temp = Environment.GetFolderPath( Environment.SpecialFolder.UserProfile );
+			List<string> tempList = new List<string>( from s in _saveDataSet.Save select s.Path );
+			tempList.Add(@"%UserProfile%\AppData\Local\Application Data");
+			tempList.Add(@"%UserProfile%\AppData\Local\History");
+			DirectorySecurity security = new DirectorySecurity();
+			
+			var tempLists = new List<string>();
+			foreach (var tempItem in tempList)
+			{
+				tempLists.Add( Syncer.GetPathWithoutEnvironment( tempItem ) );
+			}
+			listBox1.ItemsSource = FileSystem.GetListPaths(temp, tempLists);
 		}
 	}
 }
