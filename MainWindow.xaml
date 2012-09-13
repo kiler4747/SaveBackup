@@ -20,7 +20,7 @@
 				<Grid DataContext="{StaticResource saveViewSource}">
 					<DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" Height="Auto" HorizontalAlignment="Stretch" ItemsSource="{Binding}" Name="saveDataGrid" 
 							  RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Stretch" Width="Auto" CanUserDeleteRows="False" CanUserResizeRows="False" 
-							  CanUserAddRows="False" AreRowDetailsFrozen="False" CellEditEnding="SaveDataGridCellEditEnding" Margin="0,0,0,29">
+							  CanUserAddRows="False" AreRowDetailsFrozen="False" Margin="0,0,0,29">
 						<DataGrid.ContextMenu>
 							<ContextMenu>
 								<MenuItem Header="Backup" Click="BackupSelectedClick" />
