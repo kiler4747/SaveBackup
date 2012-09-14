@@ -169,7 +169,7 @@ namespace SaveBackup
 			return returnList;
 		}
 
-		private string GetPathWithoutEnvironment(string path)
+		public static string GetPathWithoutEnvironment(string path)
 		{
 			Regex regex = new Regex("%.*?%");
 			MatchCollection matchCollection = regex.Matches(path);
