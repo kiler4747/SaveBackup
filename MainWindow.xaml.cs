@@ -123,9 +123,14 @@
 			_saveDataSet.Save.RowChanged += DataSetRowEditedEventHandler;
 		}
 
-		private void WindowLoaded( object sender, RoutedEventArgs e )
+		private void WindowLoaded(object sender, RoutedEventArgs e)
 		{
 			InicializeDataSet();
+			SaveBackup.SaveEntities saveEntities = new SaveBackup.SaveEntities();
+			// Load data into Saves. You can modify this code as needed.
+			System.Windows.Data.CollectionViewSource savesViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("savesViewSource")));
+			System.Data.Objects.ObjectQuery<SaveBackup.Save> savesQuery = this.GetSavesQuery(saveEntities);
+			savesViewSource.Source = savesQuery.Execute(System.Data.Objects.MergeOption.AppendOnly);
 		}
 
 		private void DataSetRowEditedEventHandler( object sender , DataRowChangeEventArgs e)
@@ -268,6 +273,15 @@
 #if Paralel
 			_backgroundWorker.CancelAsync();
 #endif
+		}
+
+		private System.Data.Objects.ObjectQuery<Save> GetSavesQuery(SaveEntities saveEntities)
+		{
+			// Auto generated code
+
+			System.Data.Objects.ObjectQuery<SaveBackup.Save> savesQuery = saveEntities.Saves;
+			// Returns an ObjectQuery.
+			return savesQuery;
 		}
 	}
 }

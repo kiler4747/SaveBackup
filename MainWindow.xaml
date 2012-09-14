@@ -1,10 +1,11 @@
 ﻿<Window x:Class="SaveBackup.MainWindow"
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		Title="MainWindow" Height="350" Width="525" xmlns:my="clr-namespace:SaveBackup" Loaded="WindowLoaded">
+		Title="MainWindow" Height="350" Width="525" xmlns:my="clr-namespace:SaveBackup" Loaded="WindowLoaded" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
 	<Window.Resources>
 		<my:SaveDataSet x:Key="saveDataSet" />
 		<CollectionViewSource x:Key="saveViewSource" Source="{Binding Path=Save, Source={StaticResource saveDataSet}}" />
+		<CollectionViewSource x:Key="savesViewSource" d:DesignSource="{d:DesignInstance my:Save, CreateList=True}" />
 	</Window.Resources>
 	<DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
 		<Menu DockPanel.Dock="Top" Height="auto">
@@ -40,6 +41,39 @@
 						<Button Content="Cancel" Height="23" Name="CancelBackup" Width="75" Visibility="Collapsed" Click="button1_Click" />
 						<ProgressBar Height="Auto" Name="ProgressBackuping" Width="Auto" HorizontalAlignment="Stretch" Visibility="Collapsed" />
 					</DockPanel>
+					<DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" Height="200" HorizontalAlignment="Left" ItemsSource="{Binding Source={StaticResource savesViewSource}}" Margin="496,92,0,0" Name="savesDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Top" Width="400">
+						<DataGrid.Columns>
+							<DataGridTemplateColumn x:Name="iDColumn1" Header="ID" Width="SizeToHeader">
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate>
+										<Label Content="{Binding Path=ID}" />
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
+							<DataGridCheckBoxColumn x:Name="checkColumn1" Binding="{Binding Path=Check}" Header="Check" Width="SizeToHeader" />
+							<DataGridTemplateColumn x:Name="nameColumn1" Header="Name" Width="SizeToHeader">
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate>
+										<Label Content="{Binding Path=Name}" />
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
+							<DataGridTemplateColumn x:Name="pathColumn1" Header="Path" Width="SizeToHeader">
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate>
+										<Label Content="{Binding Path=Path}" />
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
+							<DataGridTemplateColumn x:Name="typeColumn" Header="Type" Width="SizeToHeader">
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate>
+										<Label Content="{Binding Path=Type}" />
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
+						</DataGrid.Columns>
+					</DataGrid>
 				</Grid>
 			</TabItem>
 			<TabItem Header="Resotre">
