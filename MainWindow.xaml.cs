@@ -110,7 +110,7 @@
 			_saveDataSetSaveTableAdapter.Fill(_saveDataSet.Save);
 			CollectionViewSource saveViewSource = ((CollectionViewSource)(FindResource("saveViewSource")));
 			saveViewSource.View.MoveCurrentToFirst();
-#if DEBUG
+#if iDEBUG
 			_saveDataSetSaveTableAdapter.Connection.Close();
 			_saveDataSet.Dispose();
 			_saveDataSetSaveTableAdapter.Dispose();
@@ -130,13 +130,8 @@
 
 		private void DataSetRowEditedEventHandler( object sender , DataRowChangeEventArgs e)
 		{
-			_saveDataSetSaveTableAdapter.Update(_saveDataSet);
-			_saveDataSet.AcceptChanges();
-		}
-
-		private void SaveDataGridCellEditEnding(object sender, System.Windows.Controls.DataGridCellEditEndingEventArgs e)
-		{
-			
+//			_saveDataSetSaveTableAdapter.Update(_saveDataSet);
+//			_saveDataSet.AcceptChanges();
 		}
 
 		private void SelectAllClick(object sender, RoutedEventArgs e)
@@ -175,69 +170,27 @@
 		{
 			try
 			{
-
-// 							_saveDataSetSaveTableAdapter.Connection.Close();
-// 								//			_saveDataSetSaveTableAdapter.Adapter.Dispose();
-// 								//			_saveDataSetSaveTableAdapter.Dispose();
-// 								//			_saveDataSetSaveTableAdapter = 
-// 								//			File.Replace( "Save.mdf", _nameDownloadedFile, "Save.mdf.bak" );
-// 								//			InicializeDataSet();
-// 								//			_saveDataSetSaveTableAdapter.Connection.Open();
-// 				
-// 								//			SaveDataSet newDataBaseDataSet = new SaveDataSet();
-// 								//			SaveTableAdapter newDataBaseAdapter = new SaveTableAdapter();
-// 								//			newDataBaseAdapter.Connection.ChangeDatabase( _nameDownloadedFile );
-// 								_saveDataSet.Save.BeginLoadData();
-// 							string queryString = @"SELECT * FROM [Save];";
-// 				
-// 							using (SqlConnection connection =
-// 									   new SqlConnection(@"Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\"+_nameDownloadedFile+";Integrated Security=True;Connect Timeout=300;User Instance=True"))
-// 							{
-// 								using (SqlCommand command =
-// 									new SqlCommand(queryString, connection))
-// 								{
-// 									connection.Open();
-// 									SqlDataAdapter adapter = new SqlDataAdapter(queryString, connection);
-// 									SqlDataReader reader = command.ExecuteReader();
-// 									reader.Close();
-// 									SaveDataSet updateDataSet = new SaveDataSet();
-// 									// Call Read before accessing data.
-// 									adapter.Fill( updateDataSet );
-// 									adapter.Update( updateDataSet);
-// 									
-// 									
-// 									while (reader.Read())
-// 									{
-// 									}
-// 									IDataReader datareader = new DataTableReader( updateDataSet.Save );
-// 									_saveDataSet.Save.Load( datareader, LoadOption.OverwriteChanges);
-// 				
-// 									// Call Close when done reading.
-// 								}
-// 							}
-// 				#if aa
-// 								SqlConnection connection =
-// 										new SqlConnection(@"Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\" + _nameDownloadedFile +
-// 														   ";Integrated Security=True;Connect Timeout=300;User Instance=True");
-// 								SqlDataAdapter NwindDA = new SqlDataAdapter("SELECT * FROM [Save]", connection);
-// 								SqlCommandBuilder x = new SqlCommandBuilder(NwindDA);
-// 								connection.Open();
-// 								NwindDA.Update(_saveDataSet, "Save");
-// 				#endif
-// 								_saveDataSet.Save.EndLoadData();
-// 								_saveDataSetSaveTableAdapter.Update(_saveDataSet);
-// 						
-				_saveDataSetSaveTableAdapter.Connection.Close();
-				_saveDataSetSaveTableAdapter.Connection.Dispose();
-				//File.Delete( "Save.mdf" );
-//				_saveDataSetSaveTableAdapter.Connection.ConnectionString =
-//						@"Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\" + _nameDownloadedFile +
-//						";Integrated Security=True;Connect Timeout=300;User Instance=True";
-				//_saveDataSetSaveTableAdapter.Connection.Open();
+				SaveTableAdapter updateAdapter = new SaveTableAdapter();
+				SaveDataSet updateDataSet = new SaveDataSet();
+				updateAdapter._ConectionString =
+						@"Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\" + _nameDownloadedFile + ";Integrated Security=True;Connect Timeout=30;User Instance=True";
+				updateAdapter.Fill(updateDataSet.Save);
+#if DEBUG
+				IEnumerable<string> testList = from s in updateDataSet.Save select s.Name;
+				IEnumerable<string> testListOriginal = from s in _saveDataSet.Save select s.Name;
+#endif
+				_saveDataSet.Save.Merge(updateDataSet.Save);
+#if DEBUG
+				IEnumerable<string> testListOriginal1 = from s in _saveDataSet.Save select s.Name;
+#endif
 			}
 			catch (Exception ex)
 			{
 				MessageBox.Show(ex.Message);
+			}
+			finally
+			{
+				_saveDataSetSaveTableAdapter.Update(_saveDataSet.Save);
 			}
 		}
 

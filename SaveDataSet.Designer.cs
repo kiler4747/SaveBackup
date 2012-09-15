@@ -682,7 +682,7 @@ namespace SaveBackup.SaveDataSetTableAdapters {
 	[global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
 	public partial class SaveTableAdapter : global::System.ComponentModel.Component {
 
-		private string _ConectionString = global::SaveBackup.Properties.Settings.Default.SaveConnectionString;
+		public string _ConectionString = global::SaveBackup.Properties.Settings.Default.SaveConnectionString;
 		
 		private global::System.Data.SqlClient.SqlDataAdapter _adapter;
 		
